@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cbhy33xukkjhl"
+path="res://.godot/imported/Sample 8.wav-aa03acdf5cdcd7cc98757415008d6514.sample"
+
+[deps]
+
+source_file="res://Assets/DSI_lego_battles/sfx/DS _ DSi - LEGO Battles - Miscellaneous - Sound Effects/Sound Effects/WAVE_COLOURFACTIONS/Sample 8.wav"
+dest_files=["res://.godot/imported/Sample 8.wav-aa03acdf5cdcd7cc98757415008d6514.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,25 @@
+[remap]
+
+importer="font_data_image"
+type="FontFile"
+uid="uid://86slyltsohyb"
+path="res://.godot/imported/ds_font.png-1f19c7569f41c920556634055ae6daa0.fontdata"
+
+[deps]
+
+source_file="res://Assets/2d/menu/ds_font.png"
+dest_files=["res://.godot/imported/ds_font.png-1f19c7569f41c920556634055ae6daa0.fontdata"]
+
+[params]
+
+character_ranges=PackedStringArray("\" \"", "\"!\"", "\"%\"", "\"`\"", "\"(\"", "\")\"", "\"*\"", "\",\"", "\"-\"", "\".\"", "\"/\"", "\"0\"", "\"1\"", "\"2\"", "\"3\"", "\"4\"", "\"5\"", "\"6\"", "\"7\"", "\"8\"", "\"9\"", "\':\'", "\"<\"", "\">\"", "\"?\"", "\"@\"", "\"A\"", "\"B\"", "\"C\"", "\"D\"", "\"E\"", "\"F\"", "\"G\"", "\"H\"", "\"I\"", "\"J\"", "\"K\"", "\"L\"", "\"M\"", "\"N\"", "\"O\"", "\"P\"", "\"Q\"", "\"R\"", "\"S\"", "\"T\"", "\"U\"", "\"V\"", "\"W\"", "\"X\"", "\"Y\"", "\"Z\"", "\"\'\"", "\"#\"", "\"a\"", "\"b\"", "\"c\"", "\"d\"", "\"e\"", "\"f\"", "\"g\"", "\"h\"", "\"i\"", "\"j\"", "\"k\"", "\"l\"", "\"m\"", "\"n\"", "\"o\"", "\"p\"", "\"q\"", "\"r\"", "\"s\"", "\"t\"", "\"u\"", "\"v\"", "\"w\"", "\"x\"", "\"y\"", "\"z\"")
+kerning_pairs=PackedStringArray()
+columns=16
+rows=5
+image_margin=Rect2i(0, 0, 0, 0)
+character_margin=Rect2i(0, 0, 0, 0)
+ascent=0
+descent=0
+fallbacks=[]
+compress=true
+scaling_mode=1

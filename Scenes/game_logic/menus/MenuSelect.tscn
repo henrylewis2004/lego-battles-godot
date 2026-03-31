@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bfx8y2ef85sdv"]
+
+[ext_resource type="Script" uid="uid://cjtk524ysfh0h" path="res://Scripts/menu/menu_select.gd" id="1_kjj5l"]
+
+[node name="MenuSelect" type="Control" unique_id=488805713]
+layout_mode = 3
+anchor_right = 0.346
+anchor_bottom = 0.667
+offset_right = -0.0800018
+offset_bottom = -0.0900116
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kjj5l")
+
+[node name="inputTimer" type="Timer" parent="." unique_id=501372711]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="inputTimer" to="." method="_on_input_timer_timeout"]
