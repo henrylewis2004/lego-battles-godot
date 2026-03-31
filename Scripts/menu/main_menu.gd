@@ -17,20 +17,27 @@ func input() -> void:
 		STATES.START:
 			if Input.is_action_just_pressed("menu_enter"):
 				scene_goto(STATES.GAMEMODE_SELECT)
-				menuSelect.enable()
 				
 				
 		STATES.GAMEMODE_SELECT:
 			if Input.is_action_just_pressed("menu_back"):
 				scene_goto(STATES.START)
 			
+		STATES.GAME_HOST:
+			if Input.is_action_just_pressed("menu_back"):
+				scene_goto(STATES.GAMEMODE_SELECT)
+				
+		STATES.GAME_JOIN:
+			if Input.is_action_just_pressed("menu_back"):
+				scene_goto(STATES.GAMEMODE_SELECT)
 
 func scene_goto(scene: int):
+	allow_input = false
 	match(scene):
 		STATES.INIT:
 			curState = STATES.INIT
 			animation_player.play("menu_init")
-			allow_input = false
+			#allow_input = false
 			
 			await animation_player.animation_finished
 			scene_goto(STATES.START)
@@ -44,6 +51,7 @@ func scene_goto(scene: int):
 			curState = STATES.GAMEMODE_SELECT
 			animation_player.play("menu_gameselect")
 			allow_input = true
+			menuSelect.enable()
 
 func scene_init():
 	scene_goto(STATES.INIT)
