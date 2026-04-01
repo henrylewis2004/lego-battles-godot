@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cvibt56hw1o2b"]
+
+[ext_resource type="Texture2D" uid="uid://bqqqv6mef6emo" path="res://Assets/2d/menu/lobby_back.png" id="1_wigjp"]
+
+[node name="GameLobby" type="Control" unique_id=1464824098]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+
+[node name="background" type="TextureRect" parent="." unique_id=1684174321]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("1_wigjp")
+
+[node name="players" type="VBoxContainer" parent="." unique_id=875824987]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 116.0
+offset_bottom = 251.0
+
+[node name="Label" type="Label" parent="players" unique_id=1536448040]
+layout_mode = 2
+text = "player 1"
+
+[node name="Label2" type="Label" parent="players" unique_id=2000052032]
+layout_mode = 2
+text = "player 2"

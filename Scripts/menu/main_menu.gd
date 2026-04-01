@@ -1,5 +1,8 @@
 extends Node2D
 
+signal create_lobby(host: bool)
+signal play_game(host: bool)
+
 var allow_input: bool
 
 enum STATES {INIT, START, GAMEMODE_SELECT, GAME_JOIN, GAME_HOST, LOBBY}
@@ -53,6 +56,13 @@ func scene_goto(scene: int):
 			allow_input = true
 			menuSelect.enable()
 
+		STATES.GAME_HOST:
+			curState = STATES.GAME_HOST
+			animation_player.play("menu_gamelobby")
+			allow_input = true
+
+			create_lobby.emit(true)
+
 func scene_init():
 	scene_goto(STATES.INIT)
 
@@ -61,9 +71,9 @@ func _on_menu_select_item_selected(index: int) -> void:
 	match(menuSelect.getMenuParentName()):
 		"menu_gameselect":
 			if (index == 0):
-				curState = STATES.GAME_HOST
+				scene_goto(STATES.GAME_HOST)
 			else:
-				curState = STATES.GAME_JOIN
+				scene_goto(STATES.GAME_JOIN)
 				
 
 # Called when the node enters the scene tree for the first time.
