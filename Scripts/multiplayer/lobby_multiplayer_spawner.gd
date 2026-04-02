@@ -2,7 +2,6 @@ class_name LobbyMultiplayerSpawner extends MultiplayerSpawner
 
 @export var player_lobby: PackedScene
 
-signal getPlayerInfo()
 signal playerInfoRecieved
 
 func _ready() -> void:

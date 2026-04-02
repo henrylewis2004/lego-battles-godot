@@ -2,6 +2,8 @@ class_name MenuSelect extends Control
 
 signal itemSelected(index: int)
 
+var util: Util
+
 @export var menuParent: Node
 @export var allow_mouse: bool = false
 @export var bonus_area: Vector2
@@ -18,6 +20,10 @@ var additional_selected: bool = false
 var itemAreas: Array[Rect2]
 
 #methods
+func giveUtilFunc(utilFun: Util) -> void:
+	util = utilFun
+	
+
 func getMenuParent_ParentName() -> String:
 	return menuParent.get_parent().name
 
@@ -49,7 +55,7 @@ func _input(event):
 			if event is InputEventMouseButton:
 				if event.is_action_released("l_mouse_button"):
 					for position_rect in itemAreas.size():
-						if mouseInArea(event.position, itemAreas[position_rect]):
+						if util.mouseInArea(event.position, itemAreas[position_rect]):
 							if position_rect < menuParent.get_child_count():
 								setIndex(position_rect)
 							else: 
@@ -61,7 +67,7 @@ func _input(event):
 				
 			elif event is InputEventMouseMotion:
 				for position_rect in itemAreas.size():
-					if mouseInArea(event.position, itemAreas[position_rect]):
+					if util.mouseInArea(event.position, itemAreas[position_rect]):
 						if position_rect < menuParent.get_child_count():
 							setIndex(position_rect)
 							break
@@ -72,12 +78,6 @@ func _input(event):
 						
 					
 
-			
-func mouseInArea(mouse_position: Vector2, area: Rect2) -> bool:
-	if ( (mouse_position.x >= area.position.x - bonus_area.x && mouse_position.x <= area.position.x + area.size.x + bonus_area.x)
-	&& (mouse_position.y >= area.position.y - bonus_area.y && mouse_position.y <= area.position.y + area.size.y + bonus_area.y) ):
-		return true
-	return false
 
 
 func getMenuItem(index: int) -> Node:

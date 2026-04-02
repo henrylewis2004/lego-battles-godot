@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bwkrl4atx2srf"]
+
+[ext_resource type="Texture2D" uid="uid://cxaermqiqi5x7" path="res://Assets/DSI_lego_battles/2d/DS _ DSi - LEGO Battles - Miscellaneous - Player Cards.png" id="1_cpn60"]
+
+[node name="Testbattlelev" type="Node2D" unique_id=1790892919]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=48709437]
+position = Vector2(306, 206)
+texture = ExtResource("1_cpn60")

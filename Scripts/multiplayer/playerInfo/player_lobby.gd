@@ -12,3 +12,8 @@ func setIcon(icon:int) -> void:
 func setBackground() -> void:
 	pass
 	
+func _init() -> void:
+	self.visible = false
+	
+func _ready() -> void:
+	self.visible = true
