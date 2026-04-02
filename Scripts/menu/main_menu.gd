@@ -96,6 +96,7 @@ func scene_goto(scene: int):
 			curState = STATES.LOBBY
 			animation_player.play("menu_gamelobby")
 			HighLevelNetworkHandler.start_sever()
+			HighLevelNetworkHandler.register_host()
 			allow_input = true
 
 			#create_lobby.emit(true)

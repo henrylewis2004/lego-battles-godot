@@ -12,19 +12,24 @@ var peer: ENetMultiplayerPeer
 var connected_players: Dictionary[int, PlayerInformation]
 
 @rpc("authority", "reliable")
-func recieve_player(id: int, playerInfo: PlayerInformation) -> void:
+func receive_player(id: int, playerInfo: PlayerInformation) -> void:
 	connected_players[id] = playerInfo
+	
 	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
 	connected_players.erase(id)
+	updateLobby.emit()
+	
 
 @rpc("any_peer", "reliable")
-func register_player(id: int, playerInfo: PlayerInformation):
+func register_player(playerInfo: PlayerInformation):
 	if !multiplayer.is_server(): return
-	print(id)
-	recieve_player.rpc(id,playerInfo)
-	recieve_player(id,playerInfo)
+	
+	var sender_id : int = multiplayer.get_remote_sender_id()
+	
+	receive_player.rpc(sender_id,playerInfo)
+	receive_player(sender_id,playerInfo)
 	
 	updateLobby.emit()
 	
@@ -34,13 +39,18 @@ func start_sever() -> void:
 	peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT, MAX_CLIENT_COUNT)
 	multiplayer.multiplayer_peer = peer
+	
+func register_host() -> void:
+	if !multiplayer.is_server(): return
+	
+	#connected_players[1] = PlayerInfo
+	receive_player(1,PlayerInfo)
 
 #host called when peer connects
 func on_connected_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 	
-	for id in connected_players:
-		recieve_player.rpc_id(peer_id, id, connected_players[id])
+	register_player.rpc_id(1,PlayerInfo)
 
 func peer_disconnect_from_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
@@ -50,6 +60,9 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 	
 func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
+	
+	for id in connected_players:
+		receive_player.rpc_id(peer_id, id, connected_players[id])
 
 
 ## client functions
@@ -64,7 +77,7 @@ func start_game() -> void:
 	get_tree().change_scene_to_file("res://Scenes/levels/battle/testbattlelev.tscn")
 
 func connect_signals() -> void:
-#	multiplayer.peer_connected.connect(peer_connect_to_server)
+	multiplayer.peer_connected.connect(peer_connect_to_server)
 	multiplayer.peer_disconnected.connect(peer_disconnect_from_server)
 	multiplayer.connected_to_server.connect(on_connected_to_server)
 #	multiplayer.connection_failed.connect(_on_connection_failed)

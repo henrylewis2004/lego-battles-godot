@@ -4,12 +4,15 @@ class_name GameLobby extends Control
 
 var players: Dictionary[int, PlayerLobby]
 
+func clear_lobby() -> void:
+	pass
 
 func _ready() -> void:
-	multiplayer.peer_connected.connect(lobby_connection)
+	HighLevelNetworkHandler.updateLobby.connect(lobby_connection)
+#	multiplayer.peer_connected.connect(lobby_connection)
 
-func lobby_connection(id: int) -> void:
-	HighLevelNetworkHandler.register_player.rpc_id(1,id,PlayerInfo)
+func lobby_connection() -> void:
+	HighLevelNetworkHandler.clear()
+	for id in HighLevelNetworkHandler.connected_players:
+		mp_LobbySpawner.lobby_player_connection(id)
 	
-	await HighLevelNetworkHandler.updateLobby
-	mp_LobbySpawner.lobby_player_connection(id)
