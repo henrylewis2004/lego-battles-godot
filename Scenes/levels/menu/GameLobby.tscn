@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cvibt56hw1o2b"]
 
 [ext_resource type="Texture2D" uid="uid://bqqqv6mef6emo" path="res://Assets/2d/menu/lobby_back.png" id="1_wigjp"]
+[ext_resource type="Script" uid="uid://43wvq5a2f6m5" path="res://Scripts/multiplayer/multiplayer_spawner.gd" id="2_s47v5"]
+[ext_resource type="PackedScene" uid="uid://l6ehm8r4aek1" path="res://Scenes/game_logic/player_lobby_scene.tscn" id="3_ec6u7"]
 
 [node name="GameLobby" type="Control" unique_id=1464824098]
 layout_mode = 3
@@ -22,10 +24,7 @@ offset_top = 19.0
 offset_right = 116.0
 offset_bottom = 251.0
 
-[node name="Label" type="Label" parent="players" unique_id=1536448040]
-layout_mode = 2
-text = "player 1"
-
-[node name="Label2" type="Label" parent="players" unique_id=2000052032]
-layout_mode = 2
-text = "player 2"
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=707643159]
+spawn_path = NodePath("../players")
+script = ExtResource("2_s47v5")
+network_player = ExtResource("3_ec6u7")

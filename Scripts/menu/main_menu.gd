@@ -59,22 +59,35 @@ func scene_goto(scene: int):
 		STATES.GAME_HOST:
 			curState = STATES.GAME_HOST
 			animation_player.play("menu_gamelobby")
+			HighLevelNetworkHandler.start_sever()
+			
 			allow_input = true
-
-			create_lobby.emit(true)
+			#create_lobby.emit(true)
+		STATES.GAME_JOIN:
+			curState = STATES.GAME_JOIN
+			animation_player.play("menu_gamelobby")
+			HighLevelNetworkHandler.start_client()
+			
+			allow_input = true
+			#create_lobby.emit(true)
 
 func scene_init():
 	scene_goto(STATES.INIT)
 
 func _on_menu_select_item_selected(index: int) -> void:
-	menuSelect.enable(false)
-	match(menuSelect.getMenuParentName()):
-		"menu_gameselect":
-			if (index == 0):
-				scene_goto(STATES.GAME_HOST)
-			else:
-				scene_goto(STATES.GAME_JOIN)
+	print(index)
+	match(menuSelect.getMenuParent_ParentName()):
+		"game_select_input":
+			match(index):
+				0 : 
+					menuSelect.enable(false)
+					scene_goto(STATES.GAME_HOST)
 				
+				1 : 	
+					menuSelect.enable(false)
+					scene_goto(STATES.GAME_JOIN)
+					
+				_ : pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -557,16 +557,22 @@ offset_right = 480.00003
 offset_bottom = 295.0
 texture = ExtResource("9_j7r8t")
 
-[node name="game_select" type="HBoxContainer" parent="background/menu_gameselect" unique_id=1632790279]
-layout_mode = 0
+[node name="game_select_input" type="Control" parent="background/menu_gameselect" unique_id=2014442044]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="host" type="Sprite2D" parent="background/menu_gameselect/game_select" unique_id=1009407712]
-position = Vector2(156, 105)
+[node name="game_select" type="HBoxContainer" parent="background/menu_gameselect/game_select_input" unique_id=1452865612]
+layout_mode = 0
+offset_right = 4.0
+
+[node name="host" type="Sprite2D" parent="background/menu_gameselect/game_select_input/game_select" unique_id=1009407712]
+position = Vector2(156, 160)
 texture = ExtResource("10_xag6k")
 centered = false
 hframes = 4
 
-[node name="Label" type="Label" parent="background/menu_gameselect/game_select/host" unique_id=119411775]
+[node name="Label" type="Label" parent="background/menu_gameselect/game_select_input/game_select/host" unique_id=119411775]
 offset_left = 6.0
 offset_top = -18.0
 offset_right = 50.0
@@ -575,14 +581,14 @@ theme_override_fonts/font = ExtResource("7_lu0vl")
 text = "HOST"
 horizontal_alignment = 1
 
-[node name="join" type="Sprite2D" parent="background/menu_gameselect/game_select" unique_id=511283577]
-position = Vector2(268, 105)
+[node name="join" type="Sprite2D" parent="background/menu_gameselect/game_select_input/game_select" unique_id=511283577]
+position = Vector2(268, 160)
 texture = ExtResource("10_xag6k")
 centered = false
 hframes = 4
 frame = 2
 
-[node name="Label" type="Label" parent="background/menu_gameselect/game_select/join" unique_id=959083687]
+[node name="Label" type="Label" parent="background/menu_gameselect/game_select_input/game_select/join" unique_id=959083687]
 offset_left = 6.0
 offset_top = -18.0
 offset_right = 50.0
@@ -591,11 +597,27 @@ theme_override_fonts/font = ExtResource("7_lu0vl")
 text = "JOIN"
 horizontal_alignment = 1
 
-[node name="MenuSelect" parent="background/menu_gameselect" unique_id=488805713 node_paths=PackedStringArray("menuParent") instance=ExtResource("11_f0as2")]
+[node name="options" type="Sprite2D" parent="background/menu_gameselect/game_select_input" unique_id=668204817]
+position = Vector2(290, 51)
+texture = ExtResource("10_xag6k")
+centered = false
+hframes = 4
+
+[node name="Label" type="Label" parent="background/menu_gameselect/game_select_input/options" unique_id=1157176209]
+offset_left = 6.0
+offset_top = -18.0
+offset_right = 50.0
+offset_bottom = 5.0
+theme_override_fonts/font = ExtResource("7_lu0vl")
+text = "HOST"
+horizontal_alignment = 1
+
+[node name="MenuSelect" parent="background/menu_gameselect" unique_id=488805713 node_paths=PackedStringArray("menuParent", "additional_input") instance=ExtResource("11_f0as2")]
 layout_mode = 1
-menuParent = NodePath("../game_select")
+menuParent = NodePath("../game_select_input/game_select")
 allow_mouse = true
 bonus_area = Vector2(5, 5)
+additional_input = [NodePath("../game_select_input/options")]
 
 [node name="Label" type="Label" parent="background/menu_gameselect" unique_id=1350544473]
 layout_mode = 0
@@ -607,6 +629,7 @@ text = "- PLAY GAME -"
 horizontal_alignment = 1
 
 [node name="GameLobby" parent="background" unique_id=1464824098 instance=ExtResource("12_8txng")]
+visible = false
 layout_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2050514423]
