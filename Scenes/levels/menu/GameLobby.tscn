@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bqqqv6mef6emo" path="res://Assets/2d/menu/lobby_back.png" id="1_wigjp"]
 [ext_resource type="Script" uid="uid://43wvq5a2f6m5" path="res://Scripts/multiplayer/lobby_multiplayer_spawner.gd" id="2_s47v5"]
+[ext_resource type="PackedScene" uid="uid://l6ehm8r4aek1" path="res://Scenes/game_logic/multiplayer/player_lobby.tscn" id="3_ec6u7"]
 
 [node name="GameLobby" type="Control" unique_id=1464824098]
 layout_mode = 3
@@ -28,3 +29,4 @@ theme_override_constants/separation = 2
 _spawnable_scenes = PackedStringArray("uid://l6ehm8r4aek1")
 spawn_path = NodePath("../players")
 script = ExtResource("2_s47v5")
+player_lobby = ExtResource("3_ec6u7")

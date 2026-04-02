@@ -39,7 +39,8 @@ func _input(event) -> void:
 					scene_goto(STATES.GAMEMODE_SELECT)
 					
 			STATES.LOBBY:
-				HighLevelNetworkHandler.start_game()
+				if Input.is_action_just_released("menu_enter"):
+					HighLevelNetworkHandler.start_game()
 					
 			STATES.SET_PLAYER_INFO:
 				if !setPlayerInfo.isInputNameFocus():

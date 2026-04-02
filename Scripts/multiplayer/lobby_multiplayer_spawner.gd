@@ -13,13 +13,13 @@ func lobby_connection(id: int) -> void:
 
 	var player: PlayerLobby = player_lobby.instantiate()
 	player.name = str(id)
-	player.setName("player")
-	player.setReady(false)
-	player.setIcon(randi() % 55)
 	#getPlayerInfo.emit()
 
 	#await playerInfoRecieved
 	get_node(spawn_path).call_deferred("add_child", player)
+	player.setName("player")
+	player.setReady(false)
+	player.setIcon(randi() % 55)
 	
 func setupPlayerLobby(name: String, icon: int, player: PlayerLobby) -> void:
 	player.setName("player")
