@@ -118,7 +118,6 @@ func scene_init():
 	scene_goto(STATES.INIT)
 
 func _on_menu_select_item_selected(index: int) -> void:
-	print(index)
 	match(menuSelect.getMenuParent_ParentName()):
 		"game_select_input":
 			match(index):

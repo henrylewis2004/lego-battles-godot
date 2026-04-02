@@ -11,4 +11,5 @@ func _ready() -> void:
 func lobby_connection(id: int) -> void:
 	HighLevelNetworkHandler.register_player.rpc_id(1,id,PlayerInfo)
 	
+	await HighLevelNetworkHandler.updateLobby
 	mp_LobbySpawner.lobby_player_connection(id)

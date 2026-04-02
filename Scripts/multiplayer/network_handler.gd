@@ -1,6 +1,8 @@
 class_name NetworkHandler
 extends Node
 
+signal updateLobby
+
 const IP_ADDRESS: String = "localhost"
 const PORT: int = 42069
 
@@ -20,9 +22,11 @@ func remove_player(id: int) -> void:
 @rpc("any_peer", "reliable")
 func register_player(id: int, playerInfo: PlayerInformation):
 	if !multiplayer.is_server(): return
-	
+	print(id)
 	recieve_player.rpc(id,playerInfo)
 	recieve_player(id,playerInfo)
+	
+	updateLobby.emit()
 	
 
 ## host functions
