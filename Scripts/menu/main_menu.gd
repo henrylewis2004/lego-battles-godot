@@ -57,18 +57,19 @@ func scene_goto(scene: int):
 			menuSelect.enable()
 
 		STATES.GAME_HOST:
-			curState = STATES.GAME_HOST
+			curState = STATES.LOBBY
 			animation_player.play("menu_gamelobby")
 			HighLevelNetworkHandler.start_sever()
 			allow_input = true
+
 			#create_lobby.emit(true)
 		STATES.GAME_JOIN:
-			curState = STATES.GAME_JOIN
+			curState = STATES.LOBBY
 			animation_player.play("menu_gamelobby")
 			HighLevelNetworkHandler.start_client()
 			
 			allow_input = true
-			create_lobby.emit(true)
+#			create_lobby.emit(true)
 
 func scene_init():
 	scene_goto(STATES.INIT)

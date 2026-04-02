@@ -1,17 +1,30 @@
-class_name CustomMultiplayerSpawner extends MultiplayerSpawner
+class_name LobbyMultiplayerSpawner extends MultiplayerSpawner
 
-@export var network_player: PackedScene
+@export var player_lobby: PackedScene
 
+signal getPlayerInfo()
+signal playerInfoRecieved
 
 func _ready() -> void:
-    multiplayer.peer_connected.connect(spawn_player)
+	multiplayer.peer_connected.connect(lobby_connection)
 
 
-func spawn_player(id: int) -> void:
-    if !multiplayer.is_server(): return
+func lobby_connection(id: int) -> void:
+	if !multiplayer.is_server(): return
 
-    var player: Node = network_player.instantiate()
-    player.name = str(id)
-    player.get_node("playerName").text = "Player: " + player.name
+	var player: PlayerLobby = player_lobby.instantiate()
+	player.name = str(id)
+	player.setName("player")
+	player.setReady(false)
+	player.setIcon(randi() % 55)
+	#getPlayerInfo.emit()
 
-    get_node(spawn_path).call_deferred("add_child", player)
+	#await playerInfoRecieved
+	get_node(spawn_path).call_deferred("add_child", player)
+	
+func setupPlayerLobby(name: String, icon: int, player: PlayerLobby) -> void:
+	player.setName("player")
+	player.setReady(false)
+	player.setIcon(0)
+	
+	playerInfoRecieved.emit()

@@ -18,12 +18,12 @@ config/icon="res://icon.svg"
 [autoload]
 
 HighLevelNetworkHandler="*uid://d22guxysu2m03"
+PlayerInfo="*uid://c5f2k8283mi7c"
 
 [display]
 
 window/size/viewport_width=480
 window/size/viewport_height=270
-window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [input]
