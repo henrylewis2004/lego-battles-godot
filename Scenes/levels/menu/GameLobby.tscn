@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://cvibt56hw1o2b"]
 
+[ext_resource type="Script" uid="uid://bdppyc8imnsfp" path="res://Scripts/multiplayer/GameLobby.gd" id="1_i0d5v"]
 [ext_resource type="Texture2D" uid="uid://bqqqv6mef6emo" path="res://Assets/2d/menu/lobby_back.png" id="1_wigjp"]
 [ext_resource type="Script" uid="uid://43wvq5a2f6m5" path="res://Scripts/multiplayer/lobby_multiplayer_spawner.gd" id="2_s47v5"]
 [ext_resource type="PackedScene" uid="uid://l6ehm8r4aek1" path="res://Scenes/game_logic/multiplayer/player_lobby.tscn" id="3_ec6u7"]
@@ -9,6 +10,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 480.0
 offset_bottom = 270.0
+script = ExtResource("1_i0d5v")
 
 [node name="background" type="TextureRect" parent="." unique_id=1684174321]
 layout_mode = 0

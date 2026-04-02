@@ -1,19 +1,30 @@
 class_name PlayerLobby extends Control
 
-func setReady(ready:bool) -> void:
+var playerIcon: int
+var playerName: String
+var playerReady: bool
+
+func setDetails(icon: int, name: String, ready: bool = false):
+	playerIcon = icon
+	playerName = name
+	playerReady = ready
+
+func setReady(ready:bool = playerReady) -> void:
 	self.get_node("readyIcon").frame = int(ready)
 
-func setName(name: String) -> void:
+func setName(name: String = playerName) -> void:
 	self.get_node("playerName").text = name
 
-func setIcon(icon:int) -> void:
+func setIcon(icon:int = playerIcon) -> void:
 	self.get_node("playerIcon").frame = icon
 	
 func setBackground() -> void:
 	pass
 	
-func _init() -> void:
-	self.visible = false
-	
+
 func _ready() -> void:
+	self.visible = false
+	setReady()
+	setName()
+	setIcon()
 	self.visible = true
