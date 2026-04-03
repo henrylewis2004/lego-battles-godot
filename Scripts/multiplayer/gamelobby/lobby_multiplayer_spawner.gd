@@ -1,6 +1,7 @@
-class_name LobbyMultiplayerSpawner extends MultiplayerSpawner
+class_name LobbyMultiplayerSpawner extends Node
 
 @export var player_lobby: PackedScene
+@export var spawn_path: NodePath
 
 func get_PlayerLobbyDict() -> Dictionary[int,PlayerLobby]:
 	var players := get_node(spawn_path).get_children()
