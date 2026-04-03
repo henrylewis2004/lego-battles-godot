@@ -1,6 +1,6 @@
 class_name GameLobby extends Control
 
-@onready var mp_LobbySpawner : LobbyMultiplayerSpawner = $MultiplayerSpawner
+@onready var mp_LobbySpawner : Node = $MultiplayerSpawner
 @onready var startButton: Button = $input/StartGameButton
 
 var lobby_players: Dictionary[int, PlayerLobby]

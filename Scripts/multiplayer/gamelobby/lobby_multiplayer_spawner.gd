@@ -12,7 +12,7 @@ func get_PlayerLobbyDict() -> Dictionary[int,PlayerLobby]:
 	
 
 func clear() -> void:
-	if !multiplayer.is_server(): return
+	#	if !multiplayer.is_server(): return
 	
 	for player in get_node(spawn_path).get_children():
 		player.queue_free()		
