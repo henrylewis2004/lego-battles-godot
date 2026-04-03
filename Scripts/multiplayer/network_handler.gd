@@ -2,6 +2,7 @@ class_name NetworkHandler
 extends Node
 
 signal updateLobby
+signal hostJoin
 
 const IP_ADDRESS: String = "localhost"
 const PORT: int = 42069
@@ -50,6 +51,7 @@ func register_host() -> void:
 	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	
 	request_lobby_update()
+	hostJoin.emit()
 
 ## client functions
 func start_client() -> void:

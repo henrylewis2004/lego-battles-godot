@@ -26,6 +26,32 @@ func updateIcon(index: int) -> void:
 		
 	playerIcon.frame = index
 
+func select_button(button: int) -> void:
+	match(button):
+		-1:
+			input_buttons.get_node("arrows/Larrow").frame = 0
+			input_buttons.get_node("arrows/Rarrow").frame = 0
+			input_buttons.get_node("accept").frame = 0
+		0:
+			input_buttons.get_node("arrows/Larrow").frame = 1
+			
+			input_buttons.get_node("arrows/Rarrow").frame = 0
+			input_buttons.get_node("accept").frame = 0
+			
+		1:
+			input_buttons.get_node("arrows/Rarrow").frame = 1
+			
+			input_buttons.get_node("arrows/Larrow").frame = 0
+			input_buttons.get_node("accept").frame = 0
+		2:
+			input_buttons.get_node("accept").frame = 1
+			
+			input_buttons.get_node("arrows/Rarrow").frame = 0
+			input_buttons.get_node("arrows/Larrow").frame = 0
+			
+
+
+
 func selection_complete(updateName: bool = true) -> void:
 	send_info.emit(input_name.text.strip_edges() if updateName else "", playerIcon.frame)
 
@@ -58,9 +84,9 @@ func _ready() -> void:
 					if grandchild is Sprite2D:
 						itemAreas.append(
 							Rect2(
-								grandchild.position, 
+								grandchild.position - (Vector2(grandchild.texture.get_size().x / grandchild.hframes,grandchild.texture.get_size().y / grandchild.vframes )) * grandchild.scale if grandchild.rotation_degrees==180 else grandchild.position, 
 								Vector2(
-									(grandchild.texture.get_width() / grandchild.hframes), 
-									grandchild.texture.get_height() / grandchild.vframes)
+									(grandchild.texture.get_width() * grandchild.scale.x / grandchild.hframes), 
+									grandchild.texture.get_height() * grandchild.scale.y / grandchild.vframes)
 									)
 							)

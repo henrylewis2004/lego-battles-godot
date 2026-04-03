@@ -62,6 +62,7 @@ func _input(event) -> void:
 						if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
 							for position_rect in setPlayerInfo.itemAreas.size():
 								if util.mouseInArea(event.position, setPlayerInfo.itemAreas[position_rect]):
+									setPlayerInfo.select_button(position_rect)
 									if position_rect < 2:
 										setPlayerInfo.updateIcon(1 if position_rect == 1 else - 1)
 									else:
@@ -70,7 +71,14 @@ func _input(event) -> void:
 									break
 							if !util.mouseInArea(event.position, setPlayerInfo.getTextInputRect()):
 								get_viewport().gui_release_focus()
-
+				
+					elif event is InputEventMouseMotion:
+						for position_rect in setPlayerInfo.itemAreas.size():
+							if util.mouseInArea(event.position, setPlayerInfo.itemAreas[position_rect]):
+								setPlayerInfo.select_button(position_rect)
+								return
+						setPlayerInfo.select_button(-1)
+					
 func scene_goto(scene: int):
 	allow_input = false
 	match(scene):

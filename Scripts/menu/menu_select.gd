@@ -4,9 +4,10 @@ signal itemSelected(index: int)
 
 var util: Util
 
-@export var menuParent: Node
 @export var allow_mouse: bool = false
-@export var bonus_area: Vector2
+@export var allow_kb: bool = false
+
+@export var menuParent: Node
 @onready var inputTimer := $inputTimer
 @export var additional_input : Array[Node]
 
@@ -31,8 +32,9 @@ func _process(delta):
 	var input: Vector2 = Vector2.ZERO
 
 	if enabled:
-		input.y = int(Input.is_action_just_pressed("ui_down")) - int(Input.is_action_just_pressed("ui_up"))
-		input.x = int(Input.is_action_just_pressed("ui_right")) - int(Input.is_action_just_pressed("ui_left"))
+		if allow_kb:
+			input.y = int(Input.is_action_just_pressed("ui_down")) - int(Input.is_action_just_pressed("ui_up"))
+			input.x = int(Input.is_action_just_pressed("ui_right")) - int(Input.is_action_just_pressed("ui_left"))
 		
 		if (selectIndex < 0 && input < Vector2.ZERO) || (additional_selected && input != Vector2.ZERO):
 			selectIndex = 0
@@ -53,7 +55,7 @@ func _input(event):
 	if enabled:
 		if allow_mouse: 
 			if event is InputEventMouseButton:
-				if event.is_action_released("l_mouse_button"):
+				if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
 					for position_rect in itemAreas.size():
 						if util.mouseInArea(event.position, itemAreas[position_rect]):
 							if position_rect < menuParent.get_child_count():
