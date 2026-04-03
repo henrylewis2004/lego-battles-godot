@@ -12,7 +12,7 @@ const MAX_CLIENT_COUNT: int = 6
 var peer: ENetMultiplayerPeer
 var connected_players: Dictionary[int, Dictionary]
 
-@rpc("authority","call_local", "reliable")
+@rpc("authority", "reliable")
 func receive_player(id: int, playerName: String, playerIcon: int) -> void:
 	print("---")
 	print("recieve player: ", id, " name: ", playerName, " icon: ", playerIcon, " | to ", multiplayer.get_unique_id())
@@ -83,7 +83,7 @@ func peer_connect_to_server(peer_id: int) -> void:
 
 	print(peer_id, " connect to server | server connected players ", connected_players)
 	for id in connected_players:
-		receive_player.rpc_id(peer_id, connected_players[id]["name"], connected_players[id]["icon"])
+		receive_player.rpc_id(peer_id, id,connected_players[id]["name"], connected_players[id]["icon"])
 		
 	request_lobby_update.rpc_id(peer_id)
 	
