@@ -12,8 +12,7 @@ func connect_signals() -> void:
 	HighLevelNetworkHandler.player_joined.connect(lobby_connection)
 	HighLevelNetworkHandler.player_left.connect(lobby_disconnection)
 
-	mp_LobbySpawner.add_player_lobby.connect(update_player_lobby_connection)
-	mp_LobbySpawner.remove_player_lobby.connect(update_player_lobby_disconnection)
+
 
 
 
@@ -38,7 +37,8 @@ func update_player_lobby_connection(id: int, player: PlayerLobby) -> void:
 
 func update_player_lobby_disconnection(id: int) -> void:
 	lobby_players.erase(id)
-	
+
+
 ## Network functions
 
 # player tells server its ready

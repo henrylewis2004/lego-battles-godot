@@ -55,4 +55,6 @@ offset_right = 459.0
 offset_bottom = 94.0
 text = "ready"
 
+[connection signal="add_player_lobby" from="MultiplayerSpawner" to="." method="update_player_lobby_connection"]
+[connection signal="remove_player_lobby" from="MultiplayerSpawner" to="." method="update_player_lobby_disconnection"]
 [connection signal="button_up" from="input/readyButtn" to="." method="_on_ready_button_button_up"]

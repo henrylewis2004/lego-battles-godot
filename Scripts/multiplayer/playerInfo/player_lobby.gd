@@ -33,5 +33,5 @@ func setBackground() -> void:
 	
 ## Engine
 
-func _ready() -> void:
-	self.visible = false
+#func _ready() -> void:
+#	self.visible = false
