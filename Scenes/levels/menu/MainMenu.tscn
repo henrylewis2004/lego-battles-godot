@@ -12,8 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://ix7knfg8nlgl" path="res://Assets/2d/menu/background_splash/SplashScreen.png" id="10_uwwum"]
 [ext_resource type="Texture2D" uid="uid://culatwsf2lj0i" path="res://Assets/2d/menu/gamemode_select_hostjoin.png" id="10_xag6k"]
 [ext_resource type="PackedScene" uid="uid://bfx8y2ef85sdv" path="res://Scenes/game_logic/menus/MenuSelect.tscn" id="11_f0as2"]
-[ext_resource type="PackedScene" uid="uid://cvibt56hw1o2b" path="res://Scenes/levels/menu/GameLobby.tscn" id="12_8txng"]
-[ext_resource type="PackedScene" uid="uid://m16k2y38hy16" path="res://Scenes/game_logic/menus/SetPlayerInfo.tscn" id="13_qvr2p"]
+[ext_resource type="PackedScene" uid="uid://cvibt56hw1o2b" path="res://Scenes/levels/menu/multiplayer/GameLobby.tscn" id="12_8txng"]
+[ext_resource type="PackedScene" uid="uid://m16k2y38hy16" path="res://Scenes/levels/menu/SetPlayerInfo.tscn" id="13_qvr2p"]
 
 [sub_resource type="Animation" id="Animation_ghw46"]
 length = 0.001

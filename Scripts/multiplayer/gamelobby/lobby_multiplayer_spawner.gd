@@ -2,6 +2,14 @@ class_name LobbyMultiplayerSpawner extends MultiplayerSpawner
 
 @export var player_lobby: PackedScene
 
+func get_PlayerLobbyDict() -> Dictionary[int,PlayerLobby]:
+	var players := get_node(spawn_path).get_children()
+	var res : Dictionary[int, PlayerLobby]
+	for player in players:
+		res[int(player.name)] = player
+	return res
+	
+
 func clear() -> void:
 	if !multiplayer.is_server(): return
 	
@@ -13,7 +21,6 @@ func remove_player(id: int)	-> void:
 	
 	get_node(spawn_path).get_node(str(id)).queue_free()
 	
-
 func lobby_player_connection(id: int) -> void:
 	if !multiplayer.is_server(): return
 

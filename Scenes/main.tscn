@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dvrd4886uvixf"]
 
-[ext_resource type="PackedScene" uid="uid://hv4175l25uao" path="res://Scenes/game_logic/multiplayer/MultiplayerHandler.tscn" id="1_bo1nx"]
+[ext_resource type="PackedScene" uid="uid://hv4175l25uao" path="res://Scenes/levels/menu/multiplayer/MultiplayerHandler.tscn" id="1_bo1nx"]
 [ext_resource type="PackedScene" uid="uid://b2tvf6khqtbt" path="res://Scenes/game_logic/core/LevelManager.tscn" id="2_8gbba"]
 
 [node name="Main" type="Node" unique_id=1797742534]
