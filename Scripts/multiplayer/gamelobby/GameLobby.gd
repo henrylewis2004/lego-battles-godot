@@ -23,8 +23,7 @@ func clear_lobby() -> void:
 
 func lobby_connection() -> void:
 	mp_LobbySpawner.clear()
-#	print("update lobby")
-#	print(multiplayer.get_unique_id(), " ", HighLevelNetworkHandler.connected_players)
+	print(multiplayer.get_unique_id(), " : update lobby | connected players: ", HighLevelNetworkHandler.connected_players,"\n")
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
 		
@@ -66,3 +65,4 @@ func lobby_ready() -> void:
 
 func _on_ready_button_button_up() -> void:
 	ready.rpc_id(1)
+	lobby_connection()

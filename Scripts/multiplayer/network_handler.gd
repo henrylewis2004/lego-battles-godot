@@ -12,13 +12,13 @@ const MAX_CLIENT_COUNT: int = 6
 var peer: ENetMultiplayerPeer
 var connected_players: Dictionary[int, Dictionary]
 
-@rpc("authority", "reliable")
+@rpc("authority","call_local", "reliable")
 func receive_player(id: int, playerName: String, playerIcon: int) -> void:
+	print("---")
+	print("recieve player: ", id, " name: ", playerName, " icon: ", playerIcon, " | to ", multiplayer.get_unique_id())
+	print("---")
 	connected_players[id] = {"name": playerName, "icon": playerIcon}
-	if !multiplayer.is_server():
-		print("---")
-		print(multiplayer.get_unique_id(), " recieve player ", id, " ", playerName, " connected: ", connected_players)
-		print("---")
+
 	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
@@ -81,7 +81,7 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 
-	print("connected players ", connected_players)
+	print(peer_id, " connect to server | server connected players ", connected_players)
 	for id in connected_players:
 		receive_player.rpc_id(peer_id, connected_players[id]["name"], connected_players[id]["icon"])
 		
