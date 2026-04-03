@@ -9,7 +9,7 @@ func createStartButton() -> void:
 	if !multiplayer.is_server(): return
 	
 	enableStartButton(false)
-	startButton.visibible = true
+	startButton.visible = true
 	
 func enableStartButton(enabled: bool) -> void:
 	startButton.disabled = !enabled
