@@ -31,6 +31,7 @@ func clear_lobby() -> void:
 
 func lobby_connection(id: int) -> void:
 	mp_LobbySpawner.lobby_player_connection(id)
+	print(HighLevelNetworkHandler.connected_players)
 	lobby_players[id] = mp_LobbySpawner.get_PlayerLobbyDict()[id]
 
 func lobby_disconnection(id: int) -> void:

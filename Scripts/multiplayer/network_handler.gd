@@ -30,12 +30,19 @@ func register_player(playerName: String, playerIcon: int):
 	var sender_id : int = multiplayer.get_remote_sender_id()
 	receive_player.rpc(sender_id,playerName, playerIcon)
 	
-	#request_lobby_update.rpc()
-	player_joined.emit(sender_id)
+	request_lobby_update.rpc(sender_id, false)
 
 @rpc("authority", "call_local","reliable")
-func request_lobby_update():
+func request_lobby_refresh():
 	updateLobby.emit()
+
+@rpc("authority", "call_local","reliable")
+func request_lobby_update(id: int, left: bool) -> void:
+	if left:
+		player_left.emit(id)
+		return
+	player_joined.emit(id)
+
 
 ## host functions
 func start_sever() -> void:
@@ -48,7 +55,7 @@ func register_host() -> void:
 	
 	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	
-	request_lobby_update()
+	request_lobby_refresh()
 	hostJoin.emit()
 
 ## client functions
@@ -68,8 +75,7 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 		
 	remove_player.rpc(peer_id)
 	
-	player_left.emit(peer_id)
-	#request_lobby_update.rpc()
+	request_lobby_update.rpc(peer_id,true)
 	
 func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
@@ -78,7 +84,7 @@ func peer_connect_to_server(peer_id: int) -> void:
 	for id in connected_players:
 		receive_player.rpc_id(peer_id, id,connected_players[id]["name"], connected_players[id]["icon"])
 		
-	request_lobby_update.rpc_id(peer_id)
+	request_lobby_refresh.rpc_id(peer_id)
 	
 
 func _on_connection_failed():
