@@ -5,8 +5,7 @@ class_name GameLobby extends Control
 
 var lobby_players: Dictionary[int, PlayerLobby]
 
-
-func _ready() -> void:
+func connect_signals() -> void:
 	HighLevelNetworkHandler.updateLobby.connect(lobby_refresh)
 	HighLevelNetworkHandler.hostJoin.connect(host_join)
 	
@@ -16,18 +15,9 @@ func _ready() -> void:
 	mp_LobbySpawner.add_player_lobby.connect(update_player_lobby_connection)
 	mp_LobbySpawner.remove_player_lobby.connect(update_player_lobby_disconnection)
 
-func createStartButton() -> void:
-	if !multiplayer.is_server(): return
-	
-	enableStartButton(false)
-	startButton.visible = true
-	
-func enableStartButton(enabled: bool) -> void:
-	startButton.disabled = !enabled
 
-func host_join() -> void:
-	if !multiplayer.is_server(): return
-	createStartButton()
+
+## Lobby methods
 
 func clear_lobby() -> void:
 	mp_LobbySpawner.clear()
@@ -42,16 +32,18 @@ func lobby_refresh() -> void:
 	mp_LobbySpawner.clear()
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
-				
+
 func update_player_lobby_connection(id: int, player: PlayerLobby) -> void:
 	lobby_players[id] = player
 
 func update_player_lobby_disconnection(id: int) -> void:
 	lobby_players.erase(id)
 	
-	
+## Network functions
+
+# player tells server its ready
 @rpc("any_peer","call_local","reliable")
-func ready(ready_state: bool) -> void:
+func ready(ready_state: bool) -> void: 
 	if !multiplayer.is_server(): return
 	recieve_playerReadyState(multiplayer.get_remote_sender_id(), ready_state)
 	update_playerReady()
@@ -62,6 +54,7 @@ func ready(ready_state: bool) -> void:
 		lobby_ready.rpc()
 		lobby_ready()
 
+# sync player ready state
 @rpc("authority","call_local", "reliable")
 func recieve_playerReadyState(playerId: int, ready:bool) -> void:
 	lobby_players[playerId].setReady(ready)
@@ -72,11 +65,30 @@ func update_playerReady() -> void:
 	
 	for playerID in lobby_players:
 		recieve_playerReadyState.rpc(playerID,lobby_players[playerID].ready)
-		
+
+# all lobby members ready (minus host)
 @rpc("authority","call_local","reliable")
 func lobby_ready() -> void:
 	print("game ready!")
 	pass
 
+## Buttons
+func createStartButton() -> void:
+	if !multiplayer.is_server(): return
+	
+	enableStartButton(false)
+	startButton.visible = true
+	
+func enableStartButton(enabled: bool) -> void:
+	startButton.disabled = !enabled
+
+func host_join() -> void:
+	if !multiplayer.is_server(): return
+	createStartButton()
+
 func _on_ready_button_button_up() -> void:
 	ready.rpc_id(1)
+	
+## Engine
+func _ready() -> void:
+	connect_signals()
