@@ -10,6 +10,8 @@ var playerReady: bool
 	#playerReady = ready
 
 func setDetails(icon: int, name: String, ready: bool = false):
+	self.visible = false
+
 	setReady(ready)
 	setName(name)
 	setIcon(icon)
@@ -31,7 +33,3 @@ func setIcon(icon:int) -> void:
 func setBackground() -> void:
 	pass
 	
-## Engine
-
-#func _ready() -> void:
-#	self.visible = false
