@@ -1,7 +1,13 @@
 class_name LobbyMultiplayerSpawner extends Node
 
+signal add_player_lobby(id: int, PlayerLobby)
+signal remove_player_lobby(id: int)
+
 @export var player_lobby: PackedScene
 @export var spawn_path: NodePath
+
+func get_playerLobby(id: int) -> PlayerLobby:
+	return get_node(spawn_path).get_child(id)
 
 func get_PlayerLobbyDict() -> Dictionary[int,PlayerLobby]:
 	var players := get_node(spawn_path).get_children()
@@ -13,9 +19,11 @@ func get_PlayerLobbyDict() -> Dictionary[int,PlayerLobby]:
 
 func clear() -> void:
 	for player in get_node(spawn_path).get_children():
+		remove_player_lobby.emit(player.name)
 		player.queue_free()		
 		
 func remove_player(id: int)	-> void:
+	remove_player_lobby.emit(id)
 	get_node(spawn_path).get_node(str(id)).queue_free()
 	
 func lobby_player_connection(id: int) -> void:
@@ -26,3 +34,5 @@ func lobby_player_connection(id: int) -> void:
 	player.setDetails(pInfo["icon"],pInfo["name"], false)
 	
 	get_node(spawn_path).call_deferred("add_child", player)
+
+	add_player_lobby.emit(id, player)

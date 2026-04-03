@@ -13,6 +13,9 @@ func _ready() -> void:
 	HighLevelNetworkHandler.player_joined.connect(lobby_connection)
 	HighLevelNetworkHandler.player_left.connect(lobby_disconnection)
 
+	mp_LobbySpawner.add_player_lobby.connect(update_player_lobby_connection)
+	mp_LobbySpawner.remove_player_lobby.connect(update_player_lobby_disconnection)
+
 func createStartButton() -> void:
 	if !multiplayer.is_server(): return
 	
@@ -31,22 +34,20 @@ func clear_lobby() -> void:
 
 func lobby_connection(id: int) -> void:
 	mp_LobbySpawner.lobby_player_connection(id)
-	print(HighLevelNetworkHandler.connected_players)
-	lobby_players[id] = mp_LobbySpawner.get_PlayerLobbyDict()[id]
-
+	
 func lobby_disconnection(id: int) -> void:
 	mp_LobbySpawner.remove_player(id)
-	lobby_players.erase(id)
-	
+
 func lobby_refresh() -> void:
 	mp_LobbySpawner.clear()
-	print(multiplayer.get_unique_id(), " : update lobby | connected players: ", HighLevelNetworkHandler.connected_players,"\n")
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
 				
-	lobby_players = mp_LobbySpawner.get_PlayerLobbyDict()
+func update_player_lobby_connection(id: int, player: PlayerLobby) -> void:
+	lobby_players[id] = player
 
-
+func update_player_lobby_disconnection(id: int) -> void:
+	lobby_players.erase(id)
 	
 	
 @rpc("any_peer","call_local","reliable")
