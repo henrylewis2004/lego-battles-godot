@@ -15,26 +15,22 @@ var connected_players: Dictionary[int, PlayerInformation]
 func receive_player(id: int, playerInfo: PlayerInformation) -> void:
 	connected_players[id] = playerInfo
 	
-	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
 	connected_players.erase(id)
-	updateLobby.emit()
-	
 
 @rpc("any_peer", "reliable")
 func register_player(playerInfo: PlayerInformation):
-	print("s")
 	if !multiplayer.is_server(): return
-	print("ser")
-	
+
 	var sender_id : int = multiplayer.get_remote_sender_id()
 	
 	receive_player.rpc(sender_id,playerInfo)
 	receive_player(sender_id,playerInfo)
 
+@rpc("authority", "reliable")
+func request_lobby_update():
 	updateLobby.emit()
-	
 	
 
 ## host functions
@@ -46,11 +42,16 @@ func start_sever() -> void:
 func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
-	#connected_players[1] = PlayerInfo
-	print("regiset host")
 	register_player(PlayerInfo)
 
-#host called when peer connects
+## client functions
+func start_client() -> void:
+	peer = ENetMultiplayerPeer.new()
+	peer.create_client(IP_ADDRESS, PORT)
+	multiplayer.multiplayer_peer = peer
+
+
+## signals
 func on_connected_to_server(peer_id: int) -> void:
 	register_player.rpc_id(1,PlayerInfo)
 
@@ -60,19 +61,20 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 	remove_player(peer_id)
 	remove_player.rpc(peer_id)
 	
+	request_lobby_update.rpc()
+	
 func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 	
 	for id in connected_players:
 		receive_player.rpc_id(peer_id, id, connected_players[id])
+		
+	request_lobby_update.rpc()
+	
 
 
 
-## client functions
-func start_client() -> void:
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(IP_ADDRESS, PORT)
-	multiplayer.multiplayer_peer = peer
+
 
 
 @rpc("authority", "call_local", "reliable")
