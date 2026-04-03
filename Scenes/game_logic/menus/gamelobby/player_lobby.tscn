@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" uid="uid://l46dabg5rr3i" path="res://Scripts/multiplayer/playerInfo/player_lobby.gd" id="1_lufpj"]
 [ext_resource type="SpriteFrames" uid="uid://dddyyr15y8wka" path="res://Resources/spriteFrame_player_card.tres" id="1_udxlu"]
+[ext_resource type="Texture2D" uid="uid://q62fu6ritqf3" path="res://Assets/2d/menu/team_back.png" id="2_bu7oo"]
 [ext_resource type="Texture2D" uid="uid://34ycdvjsfiyu" path="res://Assets/2d/menu/accept.png" id="2_lufpj"]
 [ext_resource type="FontFile" uid="uid://86slyltsohyb" path="res://Assets/2d/menu/ds_font.png" id="2_my6ph"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_udxlu"]
-size = Vector2(95, 48)
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ogggn"]
 properties/0/path = NodePath(".:text")
@@ -20,39 +18,41 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="PlayerLobby" type="Control" unique_id=1829654884]
-custom_minimum_size = Vector2(95, 48)
+custom_minimum_size = Vector2(95, 39)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 95.0
-offset_bottom = 48.0
+offset_right = 115.0
+offset_bottom = 39.0
 size_flags_horizontal = 0
 script = ExtResource("1_lufpj")
 
-[node name="background" type="TextureRect" parent="." unique_id=217031715]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("PlaceholderTexture2D_udxlu")
+[node name="background" type="Sprite2D" parent="." unique_id=1464574368]
+texture = ExtResource("2_bu7oo")
+centered = false
+hframes = 2
 
 [node name="playerIcon" type="AnimatedSprite2D" parent="." unique_id=1321795338]
-scale = Vector2(0.25, 0.25)
+position = Vector2(4, 0.99999994)
+scale = Vector2(0.2, 0.2)
 sprite_frames = ExtResource("1_udxlu")
-animation = &"player_card"
+animation = &"playerCard"
 centered = false
 
 [node name="readyIcon" type="Sprite2D" parent="." unique_id=611352237]
-position = Vector2(79, 32)
+position = Vector2(115, 12)
 texture = ExtResource("2_lufpj")
 centered = false
 hframes = 2
 
 [node name="playerName" type="Label" parent="." unique_id=898952540]
 layout_mode = 0
-offset_left = 32.0
-offset_right = 95.0
+offset_left = 29.0
+offset_top = 2.0
+offset_right = 113.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("2_my6ph")
 text = "TEST"
+horizontal_alignment = 1
 autowrap_mode = 1
 text_overrun_behavior = 3
 

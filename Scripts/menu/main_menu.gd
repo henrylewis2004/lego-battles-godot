@@ -15,6 +15,7 @@ var curState: int
 @onready var menuSelect = $background/menu_gameselect/MenuSelect
 
 @onready var setPlayerInfo : SetPlayerInfo = $background/SetPlayerInfo
+@onready var gameLobby : GameLobby = $background/GameLobby
 
 
 func _input(event) -> void:
@@ -23,27 +24,42 @@ func _input(event) -> void:
 			STATES.INIT:
 				pass
 			STATES.START:
-				if Input.is_action_just_released("menu_enter"):
+				if event.is_action_released("menu_enter"):
 					scene_goto(STATES.GAMEMODE_SELECT)
 					
 					
 			STATES.GAMEMODE_SELECT:
-				if Input.is_action_just_released("menu_back"):
+				if event.is_action_released("menu_back"):
 					scene_goto(STATES.START)
+					
+				else:
+					menuSelect.input(event)
+					#menuSelect.sendInfo()
 				
 			STATES.GAME_HOST:
-				if Input.is_action_just_released("menu_back"):
+				if event.is_action_released("menu_back"):
 					scene_goto(STATES.GAMEMODE_SELECT)
 					
 			STATES.GAME_JOIN:
-				if Input.is_action_just_released("menu_back"):
+				if event.is_action_released("menu_back"):
 					scene_goto(STATES.GAMEMODE_SELECT)
 					
 			STATES.LOBBY:
-				if Input.is_action_just_released("menu_enter"):
-					HighLevelNetworkHandler.start_game()
+				# need to implement leaving lobby
+				if event.is_action_released("menu_back"):
+					# host
+					if multiplayer.is_server():
+						scene_goto(STATES.GAMEMODE_SELECT)
+						
+					# client
+					else:
+						scene_goto(STATES.GAMEMODE_SELECT)
+						
+				else:
+					gameLobby.input(event)
 					
 			STATES.SET_PLAYER_INFO:
+				#might need refactoring to use menuSelect but works 
 				if !setPlayerInfo.isInputNameFocus():
 					if event.is_action_released("ui_left"):
 						setPlayerInfo.updateIcon(-1)
@@ -106,6 +122,8 @@ func scene_goto(scene: int):
 			animation_player.play("menu_gamelobby")
 			HighLevelNetworkHandler.start_sever()
 			HighLevelNetworkHandler.register_host()
+			
+			gameLobby.host_join()
 			allow_input = true
 
 			#create_lobby.emit(true)

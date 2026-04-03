@@ -715,7 +715,6 @@ horizontal_alignment = 1
 
 [node name="MenuSelect" parent="background/menu_gameselect" unique_id=488805713 node_paths=PackedStringArray("menuParent", "additional_input") instance=ExtResource("11_f0as2")]
 layout_mode = 1
-allow_mouse = true
 menuParent = NodePath("../game_select_input/game_select")
 additional_input = [NodePath("../game_select_input/options")]
 

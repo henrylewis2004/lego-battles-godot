@@ -2,7 +2,8 @@ class_name NetworkHandler
 extends Node
 
 signal updateLobby
-signal hostJoin
+#signal hostJoin
+
 signal player_left(id:int)
 signal player_joined(id:int)
 
@@ -56,7 +57,7 @@ func register_host() -> void:
 	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	
 	request_lobby_refresh()
-	hostJoin.emit()
+	#hostJoin.emit()
 
 ## client functions
 func start_client() -> void:

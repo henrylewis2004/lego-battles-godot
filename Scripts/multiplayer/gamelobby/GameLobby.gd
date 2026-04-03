@@ -1,5 +1,8 @@
 class_name GameLobby extends Control
 
+enum STATES {HOST_PICK_MAP, PICK_TEAM, PICK_FACTION, LOBBY_READY}
+var curState: int
+
 @onready var mp_LobbySpawner : Node = $MultiplayerSpawner
 @onready var startButton: Button = $input/StartGameButton
 
@@ -7,7 +10,7 @@ var lobby_players: Dictionary[int, PlayerLobby]
 
 func connect_signals() -> void:
 	HighLevelNetworkHandler.updateLobby.connect(lobby_refresh)
-	HighLevelNetworkHandler.hostJoin.connect(host_join)
+	#HighLevelNetworkHandler.hostJoin.connect(host_join)
 	
 	HighLevelNetworkHandler.player_joined.connect(lobby_connection)
 	HighLevelNetworkHandler.player_left.connect(lobby_disconnection)
@@ -43,7 +46,7 @@ func update_player_lobby_disconnection(id: int) -> void:
 
 # player tells server its ready
 @rpc("any_peer","call_local","reliable")
-func ready(ready_state: bool) -> void: 
+func player_ready(ready_state: bool) -> void: 
 	if !multiplayer.is_server(): return
 	recieve_playerReadyState(multiplayer.get_remote_sender_id(), ready_state)
 	update_playerReady()
@@ -72,6 +75,11 @@ func lobby_ready() -> void:
 	print("game ready!")
 	pass
 
+# Host only functions
+func set_Map() -> void:
+	if !multiplayer.is_server(): return
+	
+
 ## Buttons
 func createStartButton() -> void:
 	if !multiplayer.is_server(): return
@@ -87,8 +95,11 @@ func host_join() -> void:
 	createStartButton()
 
 func _on_ready_button_button_up() -> void:
-	ready.rpc_id(1)
+	player_ready.rpc_id(1)
 	
 ## Engine
+func input(event: InputEvent) -> void:
+	pass
+
 func _ready() -> void:
 	connect_signals()

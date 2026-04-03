@@ -1,13 +1,8 @@
 class_name PlayerLobby extends Control
 
-#var playerIcon: int
-#var playerName: String
 var playerReady: bool
-
-#func setDetails(icon: int, name: String, ready: bool = false):
-	#playerIcon = icon
-	#playerName = name
-	#playerReady = ready
+var playerFaction: int
+var playerTeam: int
 
 func setDetails(icon: int, name: String, ready: bool = false):
 	self.visible = false

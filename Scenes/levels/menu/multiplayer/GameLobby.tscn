@@ -22,11 +22,20 @@ texture = ExtResource("1_wigjp")
 [node name="players" type="VBoxContainer" parent="." unique_id=875824987]
 layout_mode = 1
 anchors_preset = -1
-offset_left = 21.0
+offset_left = 23.0
 offset_top = 19.0
-offset_right = 116.0
-offset_bottom = 251.0
+offset_right = 138.0
+offset_bottom = 253.0
 theme_override_constants/separation = 2
+
+[node name="PlayerLobby" parent="players" unique_id=1829654884 instance=ExtResource("3_ec6u7")]
+layout_mode = 2
+
+[node name="PlayerLobby2" parent="players" unique_id=1302512141 instance=ExtResource("3_ec6u7")]
+layout_mode = 2
+
+[node name="background" parent="players/PlayerLobby2" index="0" unique_id=1464574368]
+frame = 1
 
 [node name="MultiplayerSpawner" type="Node" parent="." unique_id=849264207]
 script = ExtResource("2_s47v5")
@@ -58,3 +67,5 @@ text = "ready"
 [connection signal="add_player_lobby" from="MultiplayerSpawner" to="." method="update_player_lobby_connection"]
 [connection signal="remove_player_lobby" from="MultiplayerSpawner" to="." method="update_player_lobby_disconnection"]
 [connection signal="button_up" from="input/readyButtn" to="." method="_on_ready_button_button_up"]
+
+[editable path="players/PlayerLobby2"]

@@ -4,8 +4,8 @@ signal itemSelected(index: int)
 
 var util: Util
 
-@export var allow_mouse: bool = false
-@export var allow_kb: bool = false
+@export var allow_mouse: bool = true
+@export var allow_kb: bool = true
 
 @export var menuParent: Node
 @onready var inputTimer := $inputTimer
@@ -48,11 +48,15 @@ func _process(delta):
 			"GridContainer":
 				setIndex(selectIndex + input.y + input.x * menuParent.columns)
 		
-		if Input.is_action_just_pressed("ui_accept"):
-			itemSelected.emit(selectIndex)
+		
 
-func _input(event):
+func sendInfo() -> void:
+	itemSelected.emit(selectIndex)
+
+func input(event: InputEvent):
 	if enabled:
+		if event.is_action_released("menu_enter"):
+			sendInfo()
 		if allow_mouse: 
 			if event is InputEventMouseButton:
 				if event.button_index == MOUSE_BUTTON_LEFT and !event.pressed:
