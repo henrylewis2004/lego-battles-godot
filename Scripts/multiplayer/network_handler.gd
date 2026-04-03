@@ -12,17 +12,13 @@ const MAX_CLIENT_COUNT: int = 6
 var peer: ENetMultiplayerPeer
 var connected_players: Dictionary[int, Dictionary]
 
-@rpc("authority", "reliable")
+@rpc("authority", "call_local","reliable")
 func receive_player(id: int, playerName: String, playerIcon: int) -> void:
-	print("---")
-	print("recieve player: ", id, " name: ", playerName, " icon: ", playerIcon, " | to ", multiplayer.get_unique_id())
-	print("---")
 	connected_players[id] = {"name": playerName, "icon": playerIcon}
 
 	
-@rpc("authority", "reliable")
+@rpc("authority", "call_local","reliable")
 func remove_player(id: int) -> void:
-	print("remove player id: " + str(id))
 	connected_players.erase(id)
 
 @rpc("any_peer", "reliable")
@@ -30,17 +26,16 @@ func register_player(playerName: String, playerIcon: int):
 	if !multiplayer.is_server(): return
 
 	var sender_id : int = multiplayer.get_remote_sender_id()
-	print(multiplayer.get_unique_id(), " | register player: ", sender_id)
+
 	receive_player.rpc(sender_id,playerName, playerIcon)
-	receive_player(sender_id,playerName, playerIcon)
+#	receive_player(sender_id,playerName, playerIcon)
 
 	request_lobby_update.rpc()
 	request_lobby_update()
 
-@rpc("authority", "reliable")
+@rpc("authority", "call_local","reliable")
 func request_lobby_update():
 	updateLobby.emit()
-	
 
 ## host functions
 func start_sever() -> void:
@@ -51,8 +46,8 @@ func start_sever() -> void:
 func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
-	receive_player.rpc(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
+	#receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	
 	request_lobby_update()
 	hostJoin.emit()
@@ -72,10 +67,10 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 	print("peer disconnected: ", peer_id)
 		
-	remove_player(peer_id)
+	#remove_player(peer_id)
 	remove_player.rpc(peer_id)
 	
-	request_lobby_update()
+#	request_lobby_update()
 	request_lobby_update.rpc()
 	
 func peer_connect_to_server(peer_id: int) -> void:

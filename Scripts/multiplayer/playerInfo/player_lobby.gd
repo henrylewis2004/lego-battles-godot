@@ -13,6 +13,9 @@ func setReady(ready:bool = playerReady) -> void:
 	self.get_node("readyIcon").frame = int(ready)
 
 func setName(name: String = playerName) -> void:
+	if name == "":
+		name = "Player"
+	
 	self.get_node("playerName").text = name
 
 func setIcon(icon:int = playerIcon) -> void:
