@@ -9,20 +9,20 @@ const PORT: int = 42069
 const MAX_CLIENT_COUNT: int = 6
 
 var peer: ENetMultiplayerPeer
-var connected_players: Dictionary[int, PlayerInformation]
+var connected_players: Dictionary[int, Dictionary]
 
 @rpc("authority", "reliable")
-func receive_player(id: int, playerInfo: PlayerInformation) -> void:
+func receive_player(id: int, playerName: String, playerIcon: int) -> void:
 	if !multiplayer.is_server(): print("not server!")
 	print("recieve player")
-	connected_players[id] = playerInfo
+	connected_players[id] = {"name": playerName, "icon": playerIcon}
 	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
 	connected_players.erase(id)
 
 @rpc("any_peer", "reliable")
-func register_player(playerInfo: PlayerInformation):
+func register_player(playerName: String, playerIcon: int):
 	print("register called by: " + str(multiplayer.get_remote_sender_id()))
 	if !multiplayer.is_server(): return
 
@@ -30,8 +30,8 @@ func register_player(playerInfo: PlayerInformation):
 	if sender_id == 0: sender_id += 1
 	print("register player id: " + str(sender_id))
 	
-	receive_player.rpc(sender_id,playerInfo)
-	receive_player(sender_id,playerInfo)
+	receive_player.rpc(sender_id,playerName, playerIcon)
+	receive_player(sender_id,playerName, playerIcon)
 
 @rpc("authority", "reliable")
 func request_lobby_update():
@@ -47,7 +47,7 @@ func start_sever() -> void:
 func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
-	register_player(PlayerInfo)
+	register_player(PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	request_lobby_update()
 
 ## client functions
@@ -60,7 +60,7 @@ func start_client() -> void:
 ## signals
 func on_connected_to_server() -> void:
 	print("connected to server")
-	register_player.rpc_id(1,PlayerInfo)
+	register_player.rpc_id(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	print("rpc sent")
 
 func peer_disconnect_from_server(peer_id: int) -> void:
