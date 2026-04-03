@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://cvibt56hw1o2b"]
+
+[ext_resource type="Script" uid="uid://bdppyc8imnsfp" path="res://Scripts/multiplayer/gamelobby/GameLobby.gd" id="1_i0d5v"]
+[ext_resource type="Texture2D" uid="uid://bqqqv6mef6emo" path="res://Assets/2d/menu/lobby_back.png" id="1_wigjp"]
+[ext_resource type="Script" uid="uid://43wvq5a2f6m5" path="res://Scripts/multiplayer/gamelobby/lobby_multiplayer_spawner.gd" id="2_s47v5"]
+[ext_resource type="PackedScene" uid="uid://l6ehm8r4aek1" path="res://Scenes/game_logic/menus/gamelobby/player_lobby.tscn" id="3_ec6u7"]
+[ext_resource type="PackedScene" uid="uid://cocflk4uvbhal" path="res://Scenes/game_logic/menus/gamelobby/StartGameButton.tscn" id="5_4c37j"]
+
+[node name="GameLobby" type="Control" unique_id=1464824098]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 270.0
+script = ExtResource("1_i0d5v")
+
+[node name="background" type="TextureRect" parent="." unique_id=1684174321]
+layout_mode = 0
+offset_right = 480.0
+offset_bottom = 270.0
+texture = ExtResource("1_wigjp")
+
+[node name="players" type="VBoxContainer" parent="." unique_id=875824987]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 21.0
+offset_top = 19.0
+offset_right = 116.0
+offset_bottom = 251.0
+theme_override_constants/separation = 2
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=707643159]
+spawn_path = NodePath("../players")
+script = ExtResource("2_s47v5")
+player_lobby = ExtResource("3_ec6u7")
+
+[node name="input" type="Control" parent="." unique_id=11921305]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StartGameButton" parent="input" unique_id=1740010248 instance=ExtResource("5_4c37j")]
+visible = false
+layout_mode = 1
+offset_left = 363.0
+offset_top = 213.0
+offset_right = 429.0
+offset_bottom = 204.0
+disabled = true
+
+[node name="readyButtn" type="Button" parent="input" unique_id=101844708]
+layout_mode = 0
+offset_left = 407.0
+offset_top = 63.0
+offset_right = 459.0
+offset_bottom = 94.0
+text = "ready"
+
+[connection signal="button_up" from="input/readyButtn" to="." method="_on_ready_button_button_up"]
