@@ -5,6 +5,14 @@ class_name GameLobby extends Control
 
 var lobby_players: Dictionary[int, PlayerLobby]
 
+
+func _ready() -> void:
+	HighLevelNetworkHandler.updateLobby.connect(lobby_refresh)
+	HighLevelNetworkHandler.hostJoin.connect(host_join)
+	
+	HighLevelNetworkHandler.player_joined.connect(lobby_connection)
+	HighLevelNetworkHandler.player_left.connect(lobby_disconnection)
+
 func createStartButton() -> void:
 	if !multiplayer.is_server(): return
 	
@@ -21,19 +29,24 @@ func host_join() -> void:
 func clear_lobby() -> void:
 	mp_LobbySpawner.clear()
 
-func lobby_connection() -> void:
+func lobby_connection(id: int) -> void:
+	mp_LobbySpawner.lobby_player_connection(id)
+	lobby_players[id] = mp_LobbySpawner.get_PlayerLobbyDict()[id]
+
+func lobby_disconnection(id: int) -> void:
+	mp_LobbySpawner.remove_player(id)
+	lobby_players.erase(id)
+	
+func lobby_refresh() -> void:
 	mp_LobbySpawner.clear()
 	print(multiplayer.get_unique_id(), " : update lobby | connected players: ", HighLevelNetworkHandler.connected_players,"\n")
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
 				
 	lobby_players = mp_LobbySpawner.get_PlayerLobbyDict()
-	print(multiplayer.get_unique_id(), lobby_players)
 
 
-func _ready() -> void:
-	HighLevelNetworkHandler.updateLobby.connect(lobby_connection)
-	HighLevelNetworkHandler.hostJoin.connect(host_join)
+	
 	
 @rpc("any_peer","call_local","reliable")
 func ready(ready_state: bool) -> void:
@@ -65,4 +78,3 @@ func lobby_ready() -> void:
 
 func _on_ready_button_button_up() -> void:
 	ready.rpc_id(1)
-	lobby_connection()

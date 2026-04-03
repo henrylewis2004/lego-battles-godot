@@ -3,6 +3,8 @@ extends Node
 
 signal updateLobby
 signal hostJoin
+signal player_left(id:int)
+signal player_joined(id:int)
 
 const IP_ADDRESS: String = "localhost"
 const PORT: int = 42069
@@ -26,12 +28,10 @@ func register_player(playerName: String, playerIcon: int):
 	if !multiplayer.is_server(): return
 
 	var sender_id : int = multiplayer.get_remote_sender_id()
-
 	receive_player.rpc(sender_id,playerName, playerIcon)
-#	receive_player(sender_id,playerName, playerIcon)
-
-	request_lobby_update.rpc()
-	request_lobby_update()
+	
+	#request_lobby_update.rpc()
+	player_joined.emit(sender_id)
 
 @rpc("authority", "call_local","reliable")
 func request_lobby_update():
@@ -47,7 +47,6 @@ func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
 	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
-	#receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
 	
 	request_lobby_update()
 	hostJoin.emit()
@@ -67,11 +66,10 @@ func peer_disconnect_from_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 	print("peer disconnected: ", peer_id)
 		
-	#remove_player(peer_id)
 	remove_player.rpc(peer_id)
 	
-#	request_lobby_update()
-	request_lobby_update.rpc()
+	player_left.emit(peer_id)
+	#request_lobby_update.rpc()
 	
 func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
