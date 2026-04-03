@@ -15,6 +15,9 @@ var connected_players: Dictionary[int, Dictionary]
 @rpc("authority", "reliable")
 func receive_player(id: int, playerName: String, playerIcon: int) -> void:
 	connected_players[id] = {"name": playerName, "icon": playerIcon}
+	if !multiplayer.is_server():
+		print()
+		print(multiplayer.get_unique_id(), " recieve player ", id, " ", playerName, " connected: ", connected_players)
 	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
@@ -27,7 +30,7 @@ func register_player(playerName: String, playerIcon: int):
 
 	var sender_id : int = multiplayer.get_remote_sender_id()
 
-	receive_player.rpc("id: " + str(sender_id) + " playername " + playerName + " icon: " + str(playerIcon))
+	receive_player.rpc(sender_id,playerName, playerIcon)
 	receive_player(sender_id,playerName, playerIcon)
 
 	request_lobby_update.rpc()
@@ -79,7 +82,10 @@ func peer_connect_to_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
 	print("peer connection")
 	
+	print()
+	print("send connected players")
 	for id in connected_players:
+		print(id)
 		receive_player.rpc_id(peer_id, connected_players[id]["name"], connected_players[id]["icon"])
 		
 	request_lobby_update()

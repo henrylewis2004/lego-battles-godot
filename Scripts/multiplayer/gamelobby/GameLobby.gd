@@ -23,11 +23,13 @@ func clear_lobby() -> void:
 
 func lobby_connection() -> void:
 	mp_LobbySpawner.clear()
+	print("update lobby")
+	print(multiplayer.get_unique_id(), " ", HighLevelNetworkHandler.connected_players)
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
 		
-	lobby_players = mp_LobbySpawner.get_PlayerLobbyDict()
-	print(multiplayer.get_unique_id(), lobby_players)
+#	lobby_players = mp_LobbySpawner.get_PlayerLobbyDict()
+#	print(multiplayer.get_unique_id(), lobby_players)
 
 
 func _ready() -> void:
