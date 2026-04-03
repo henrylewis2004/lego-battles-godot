@@ -17,10 +17,10 @@ func remove_player(id: int)	-> void:
 func lobby_player_connection(id: int) -> void:
 	if !multiplayer.is_server(): return
 
-	var pInfo: PlayerInformation = HighLevelNetworkHandler.connected_players[id]
+	var pInfo: Dictionary = HighLevelNetworkHandler.connected_players[id]
 	var player: PlayerLobby = player_lobby.instantiate()
 	player.name = str(id)
 		
-	player.setDetails(pInfo.playerCard_index,pInfo.playerName, false)
+	player.setDetails(pInfo["icon"],pInfo["name"], false)
 	
 	get_node(spawn_path).call_deferred("add_child", player)

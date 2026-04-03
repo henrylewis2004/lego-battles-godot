@@ -13,21 +13,21 @@ var connected_players: Dictionary[int, Dictionary]
 
 @rpc("authority", "reliable")
 func receive_player(id: int, playerName: String, playerIcon: int) -> void:
-	if !multiplayer.is_server(): print("not server!")
-	print("recieve player")
+	print()
+	print("recieve player to id: " + str(multiplayer.get_remote_sender_id()))
+	print("id: , playerName: , playerIcon: ", id, playerName, playerIcon)
 	connected_players[id] = {"name": playerName, "icon": playerIcon}
 	
 @rpc("authority", "reliable")
 func remove_player(id: int) -> void:
+	print("remove player id: " + str(id))
 	connected_players.erase(id)
 
 @rpc("any_peer", "reliable")
 func register_player(playerName: String, playerIcon: int):
-	print("register called by: " + str(multiplayer.get_remote_sender_id()))
 	if !multiplayer.is_server(): return
 
 	var sender_id : int = multiplayer.get_remote_sender_id()
-	if sender_id == 0: sender_id += 1
 	print("register player id: " + str(sender_id))
 	
 	receive_player.rpc(sender_id,playerName, playerIcon)
@@ -47,7 +47,9 @@ func start_sever() -> void:
 func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
-	register_player(PlayerInfo.playerName, PlayerInfo.playerCard_index)
+	receive_player.rpc(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
+	receive_player(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
+	
 	request_lobby_update()
 
 ## client functions
@@ -61,7 +63,6 @@ func start_client() -> void:
 func on_connected_to_server() -> void:
 	print("connected to server")
 	register_player.rpc_id(1,PlayerInfo.playerName, PlayerInfo.playerCard_index)
-	print("rpc sent")
 
 func peer_disconnect_from_server(peer_id: int) -> void:
 	if !multiplayer.is_server(): return
@@ -78,6 +79,7 @@ func peer_connect_to_server(peer_id: int) -> void:
 	print("peer connection")
 	print(peer_id)
 	
+	print(connected_players)
 	for id in connected_players:
 		receive_player.rpc_id(peer_id, id, connected_players[id])
 		
