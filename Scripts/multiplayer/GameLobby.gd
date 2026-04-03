@@ -12,8 +12,11 @@ func _ready() -> void:
 #	multiplayer.peer_connected.connect(lobby_connection)
 
 func lobby_connection() -> void:
-	print(multiplayer.get_unique_id(),HighLevelNetworkHandler.connected_players)
 	mp_LobbySpawner.clear()
 	for id in HighLevelNetworkHandler.connected_players:
 		mp_LobbySpawner.lobby_player_connection(id)
+	return
+
+
+
 	

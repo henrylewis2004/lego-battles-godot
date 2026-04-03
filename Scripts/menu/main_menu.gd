@@ -3,6 +3,7 @@ extends Node2D
 signal create_lobby(host: bool)
 signal play_game(host: bool)
 
+
 var allow_input: bool
 var util : Util = Util.new()
 
@@ -150,5 +151,11 @@ func _on_set_player_info_send_info(name: String, icon: int) -> void:
 	if name != "":
 		PlayerInfo.playerName = name
 	PlayerInfo.playerCard_index = icon
+
+	var config := ConfigFile.new()
+	config.set_value("player", "name", PlayerInfo.name)
+	config.set_value("player", "iconIndex", PlayerInfo.playerCard_index)
+	config.save(PlayerInfo.get_savePath())
+
 	
 	scene_goto(STATES.GAMEMODE_SELECT)
