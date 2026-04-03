@@ -24,14 +24,17 @@ func remove_player(id: int) -> void:
 
 @rpc("any_peer", "reliable")
 func register_player(playerInfo: PlayerInformation):
+	print("s")
 	if !multiplayer.is_server(): return
+	print("ser")
 	
 	var sender_id : int = multiplayer.get_remote_sender_id()
 	
 	receive_player.rpc(sender_id,playerInfo)
 	receive_player(sender_id,playerInfo)
-	
+
 	updateLobby.emit()
+	
 	
 
 ## host functions
@@ -44,12 +47,11 @@ func register_host() -> void:
 	if !multiplayer.is_server(): return
 	
 	#connected_players[1] = PlayerInfo
-	receive_player(1,PlayerInfo)
+	print("regiset host")
+	register_player(PlayerInfo)
 
 #host called when peer connects
 func on_connected_to_server(peer_id: int) -> void:
-	if !multiplayer.is_server(): return
-	
 	register_player.rpc_id(1,PlayerInfo)
 
 func peer_disconnect_from_server(peer_id: int) -> void:
@@ -63,6 +65,7 @@ func peer_connect_to_server(peer_id: int) -> void:
 	
 	for id in connected_players:
 		receive_player.rpc_id(peer_id, id, connected_players[id])
+
 
 
 ## client functions
