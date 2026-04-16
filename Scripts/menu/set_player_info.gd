@@ -20,9 +20,11 @@ func updateIcon(index: int) -> void:
 	index = playerIcon.frame + index
 	
 	if (index < 0):
-		index = playerIcon.sprite_frames.get_frame_count("player_card") - 1
-	elif (index > playerIcon.sprite_frames.get_frame_count("player_card") - 1):
+		index = playerIcon.sprite_frames.get_frame_count("playerCard") - 1
+	elif (index > playerIcon.sprite_frames.get_frame_count("playerCard") - 1):
 		index = 0
+
+	print(index)
 		
 	playerIcon.frame = index
 

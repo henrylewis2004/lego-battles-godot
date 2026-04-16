@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ud7alsymnbg4"]
+
+[node name="PlayerFactionChoice" type="Control" unique_id=564584939]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="selection" type="Control" parent="." unique_id=1506985796]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="team" type="Control" parent="selection" unique_id=1147148459]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="faction" type="Control" parent="selection" unique_id=1863471640]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="hero" type="Control" parent="selection" unique_id=1349128968]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

@@ -36,7 +36,7 @@ stretch_mode = 1
 position = Vector2(238.00002, 105)
 scale = Vector2(0.75, 0.75)
 sprite_frames = ExtResource("2_6y0s3")
-animation = &"player_card"
+animation = &"playerCard"
 
 [node name="input" type="Control" parent="." unique_id=413541978]
 anchors_preset = 0
@@ -64,16 +64,16 @@ centered = false
 hframes = 2
 
 [node name="accept" type="Sprite2D" parent="input" unique_id=1458664060]
-position = Vector2(321, 186)
+position = Vector2(318, 186)
 texture = ExtResource("3_xenkm")
 centered = false
 hframes = 2
 
 [node name="LineEdit" type="LineEdit" parent="." unique_id=1745643068]
 layout_mode = 0
-offset_left = 176.0
+offset_left = 173.0
 offset_top = 179.0
-offset_right = 309.0
+offset_right = 306.0
 offset_bottom = 210.0
 theme_override_fonts/font = ExtResource("3_oh3ux")
 theme_override_styles/normal = SubResource("StyleBoxTexture_e166u")

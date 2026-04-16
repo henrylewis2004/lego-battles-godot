@@ -138,7 +138,7 @@ func scene_goto(scene: int):
 		STATES.SET_PLAYER_INFO:
 			allow_input = true
 			curState = STATES.SET_PLAYER_INFO
-			$background/SetPlayerInfo.reset()
+			setPlayerInfo.reset()
 			animation_player.play("menu_set_player_info")
 
 func scene_init():

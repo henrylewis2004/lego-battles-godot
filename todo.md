@@ -6,6 +6,9 @@
 - sfx
 - back buttons
 - options gfx
+- change mainmenu node structure
+> - spawn in each menu screen not change visibility
+- add menu screen transition animation
 
 ### MenuSelect
 

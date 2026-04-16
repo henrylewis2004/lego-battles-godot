@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dvw807ja3byh5"]
 
+[ext_resource type="Texture2D" uid="uid://b2qdm2q3nnoc8" path="res://Assets/2d/menu/arrow.png" id="1_biyfc"]
+
 [node name="HostMapChoice" type="Control" unique_id=1536984382]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,32 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=692015166]
+
+[node name="input" type="Control" parent="." unique_id=1486713814]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="arrows" type="HBoxContainer" parent="input" unique_id=88148411]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Larrow" type="Sprite2D" parent="input/arrows" unique_id=162971437]
+position = Vector2(0, 6)
+rotation = 3.1415927
+texture = ExtResource("1_biyfc")
+centered = false
+hframes = 2
+
+[node name="Rarrow" type="Sprite2D" parent="input/arrows" unique_id=1519079466]
+texture = ExtResource("1_biyfc")
+centered = false
+hframes = 2
+
+[node name="mapName" type="Label" parent="." unique_id=594267418]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
